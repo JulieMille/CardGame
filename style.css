@@ -1,0 +1,85 @@
+@font-face {
+    font-family: "StratosSkyeng";
+    src: url("/fonts/Desktop/stratosskyeng-regular.otf") format("opentype");
+}
+@font-face {
+    font-family: "StratosSkyengLight";
+    src: url("/fonts/Desktop/stratosskyeng-light.otf") format("opentype");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+a {
+    text-decoration: none;
+  }
+
+body {
+    background-color: #004980;
+    font-family: "StratosSkyeng";
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+    align-items: center;
+    justify-content: center;
+    min-width: 480px;
+    min-height: 459px;
+    background-color: #C2F5FF;
+    border-radius: 12px;
+}
+
+.box-text {
+    color: #004980;
+    font-weight: 400;
+    font-size: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box-levels {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.level {
+    background-color: white;
+    color: #0080C1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "StratosSkyeng";
+    font-weight: 400;
+    font-size: 64px;
+    width: 98px;
+    height: 98px;
+    border-radius: 12px;
+    border: none;
+}
+
+.box-button {
+    box-sizing: border-box;
+    border-radius: 12px;
+    background-color: #7AC100;
+    color: white;
+    font-family: "StratosSkyengLight";
+    width: 246px;
+    height: 50px;
+    border: none;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+}
