@@ -53,7 +53,9 @@ function getLevel(el, cardsNum) {
     // });
 }
 
-elementForm.addEventListener('submit', getLevel);
+elementForm.addEventListener('submit', getLevel, () => {
+    event.preventDefault();
+})
 
 function renderApp() {
 
