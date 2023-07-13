@@ -8,7 +8,6 @@ let game = {
 
 const cardSuits = ["Diamonds", "Hearts", "Clubs", "Spades"];
 const cardRanks = ['6', '7', '8', '9', '10', 'Q', 'K', 'J', 'A'];
-const elementForm = document.getElementById('form');
 
 function getRandomCard(cardsNum) {
     return Math.floor(Math.random() * cardsNum);
@@ -16,46 +15,42 @@ function getRandomCard(cardsNum) {
 
 function getLevel(el, cardsNum) {
 
-    // el.addEventListener('click', () => {
+    el.addEventListener('click', () => {
 
-    let levelone = document.querySelector(".level1");
-    let leveltwo = document.querySelector(".level2");
-    let levelthree = document.querySelector(".level3");
-    let start = document.querySelector(".box-button");
+        let levelone = document.querySelector(".level1");
+        let leveltwo = document.querySelector(".level2");
+        let levelthree = document.querySelector(".level3");
+        let start = document.querySelector(".box-button");
 
-    levelone.classList.remove('chosen');
-    leveltwo.classList.remove('chosen');
-    levelthree.classList.remove('chosen');
-    game.cards = [];
+        levelone.classList.remove('chosen');
+        leveltwo.classList.remove('chosen');
+        levelthree.classList.remove('chosen');
+        game.cards = [];
 
-    el.classList.add('chosen');
+        el.classList.add('chosen');
 
-    for (let i = 1; i <= cardsNum; i++) {
-        game.cards.push([cardSuits[getRandomCard(cardSuits.length)], cardRanks[getRandomCard(cardRanks.length)]]);
-    }
+        for (let i = 1; i <= cardsNum; i++) {
+            game.cards.push([cardSuits[getRandomCard(cardSuits.length)], cardRanks[getRandomCard(cardRanks.length)]]);
+        }
 
-    if (el === levelone) {
-        game.difficulty = 1;
-    }
-    if (el === leveltwo) {
-        game.difficulty = 2;
-    }
-    if (el === levelthree) {
-        game.difficulty = 3;
-    }
+        if (el === levelone) {
+            game.difficulty = 1;
+        }
+        if (el === leveltwo) {
+            game.difficulty = 2;
+        }
+        if (el === levelthree) {
+            game.difficulty = 3;
+        }
 
-    start.addEventListener('click', () => {
-        game.status = "game";
-        console.log(game.status);
-        renderApp();
-        console.log("game object", game);
+        start.addEventListener('click', () => {
+            game.status = "game";
+            console.log(game.status);
+            renderApp();
+            console.log("game object", game);
+        });
     });
-    // });
 }
-
-elementForm.addEventListener('submit', getLevel, () => {
-    event.preventDefault();
-})
 
 function renderApp() {
 
@@ -64,6 +59,7 @@ function renderApp() {
     if (game.status === "level") {
 
         const gameHtml = `
+        <form id="form" action="">
         <div class="container">
         <div class="box">
             <div class="box-text">
@@ -79,7 +75,8 @@ function renderApp() {
                 <button class="box-button">Старт</button>
             </form>
         </div>
-        </div>`;
+        </div>
+        </form>`;
 
         let levelone = document.querySelector(".level1");
         let leveltwo = document.querySelector(".level2");
@@ -91,6 +88,12 @@ function renderApp() {
         getLevel(levelthree, 18);
 
         appEl.innerHTML = gameHtml;
+
+        const elementForm = document.getElementById('form');
+
+        elementForm.addEventListener('submit', getLevel, () => {
+            event.preventDefault();
+        })
 
     }
 
