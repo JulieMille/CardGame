@@ -82,10 +82,11 @@ function renderApp() {
         let leveltwo = document.querySelector(".level2");
         let levelthree = document.querySelector(".level3");
         let start = document.querySelector(".box-button");
+        let level = game.difficulty;
 
-        getLevel(levelone, 6);
-        getLevel(leveltwo, 12);
-        getLevel(levelthree, 18);
+        getLevel(level, level * 6);
+        // getLevel(leveltwo, 12);
+        // getLevel(levelthree, 18);
 
         appEl.innerHTML = gameHtml;
 
