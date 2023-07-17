@@ -83,3 +83,21 @@ body {
     font-size: 24px;
     line-height: 32px;
 }
+
+.level1:hover {
+    background-color: #a3a7aa;
+}
+.level2:hover {
+    background-color: #a3a7aa;
+}
+.level3:hover {
+    background-color: #a3a7aa;
+}
+
+.box-button:hover {
+    background-color: #b5d086;
+}
+
+.chosen {
+    background-color: #5e7485;
+}
