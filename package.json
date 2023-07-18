@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "lint": "stylelint \"**/*.css\""
+    "lint": "stylelint \"**/*.css\"",
+    "format": "prettier --write ./src/"
   },
   "devDependencies": {
     "stylelint": "^15.10.1",
