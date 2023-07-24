@@ -1,3 +1,6 @@
+import "./style.css"
+// import clubs6 "./img/Clubs6.png"
+
 let game = {
     time: 0,
     difficulty: 0,
@@ -159,20 +162,21 @@ function renderApp() {
             game.cards.map((item) => {
                 const newImg = document.createElement("img");
                 newImg.classList.add("card");
-                newImg.src = `./img/${item.suit} ${item.rank}.png`;
+                // newImg.src = `<%=require('./img/${item.suit} ${item.rank}.png')%>`;
+                newImg.src = `static/${item.suit} ${item.rank}.png`
                 newImg.alt = `Card ${item.suit} ${item.rank}`;
                 newImg.addEventListener('click', () => {
                     console.log(item.suit + item.rank);
                     // newImg.src = `./img/${item.suit} ${item.rank}.png`
                     switch(game.choice) {
                         case 0:  
-                          newImg.src = `./img/${item.suit} ${item.rank}.png`
+                          newImg.src = `./static/${item.suit} ${item.rank}.png`
                           game.choice = 1;
                           game.cardOne = item;
                           break;
                       
                         case 1:  
-                          newImg.src = `./img/${item.suit} ${item.rank}.png`
+                          newImg.src = `./static/${item.suit} ${item.rank}.png`
                           game.choice = 2;
                           game.cardTwo = item;
                           if(game.cardOne.suit === game.cardTwo.suit && game.cardOne.rank === game.cardTwo.rank) {
@@ -192,7 +196,7 @@ function renderApp() {
             const cards = Array.from(document.querySelectorAll(".card"));
             setTimeout(() => {
                 cards.map((item) => {
-                    item.src = `./img/closed-card.svg`;
+                    item.src = `./static/closed-card.svg`;
 										game.choice = 0;                
 									})
             }, 5000)
