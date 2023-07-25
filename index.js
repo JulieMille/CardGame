@@ -1,9 +1,15 @@
+import "./style.css"
+// import clubs6 "./img/Clubs6.png"
+
 let game = {
     time: 0,
     difficulty: 0,
     status: "level",
     cards: [],
-    userCards: [],
+    cardOne: {},
+    cardTwo: {},
+    choice: 3,
+    // userCards: [],
 };
 
 const cardSuits = ["Diamonds", "Hearts", "Clubs", "Spades"];
@@ -13,6 +19,20 @@ const cardRanks = ['6', '7', '8', '9', '10', 'Q', 'K', 'J', 'A'];
 function getRandomCard(cardsNum) {
     return Math.floor(Math.random() * cardsNum);
 }
+
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+    return array;
+  }
 
 // function getLevel(el, cardsNum) {
 
@@ -112,12 +132,74 @@ function renderApp() {
             console.log("worked");
             console.log(event);
             if (game.status === "game") {
-                const gameHtml = `<div>Игра началась!</div>`;
+                const gameHtml = `  <div>
+                <div class="head center">
+                    <div class="timer">
+                        <div class="timer-up">
+                            <div class="min">min</div>
+                            <div class="sec">sec</div>
+                        </div>
+                        <div class="numbers">00.00</div>
+                    </div>
+                    <button class="button-start-over">Начать заново</button>
+                </div>
+                <div class="cards center">
+                </div>
+            </div>`;
                 appEl.innerHTML = gameHtml;
             }
-            for (let i = 1; i <= (game.difficulty * 6); i++) {
-                game.cards.push([cardSuits[getRandomCard(cardSuits.length)], cardRanks[getRandomCard(cardRanks.length)]]);
+            for (let i = 1; i <= (game.difficulty * 3); i++) {
+                let suit = cardSuits[getRandomCard(cardSuits.length)];
+                let rank = cardRanks[getRandomCard(cardRanks.length)];
+                game.cards.push({suit,rank});
+                game.cards.push({suit,rank});
+                
+                // game.cards.push([cardSuits[getRandomCard(cardSuits.length)], cardRanks[getRandomCard(cardRanks.length)]]);
             }
+            console.log(game.cards);
+            shuffle(game.cards);
+            const cardsEl = document.querySelector(".cards");
+            game.cards.map((item) => {
+                const newImg = document.createElement("img");
+                newImg.classList.add("card");
+                // newImg.src = `<%=require('./img/${item.suit} ${item.rank}.png')%>`;
+                newImg.src = `static/${item.suit} ${item.rank}.png`
+                newImg.alt = `Card ${item.suit} ${item.rank}`;
+                newImg.addEventListener('click', () => {
+                    console.log(item.suit + item.rank);
+                    // newImg.src = `./img/${item.suit} ${item.rank}.png`
+                    switch(game.choice) {
+                        case 0:  
+                          newImg.src = `./static/${item.suit} ${item.rank}.png`
+                          game.choice = 1;
+                          game.cardOne = item;
+                          break;
+                      
+                        case 1:  
+                          newImg.src = `./static/${item.suit} ${item.rank}.png`
+                          game.choice = 2;
+                          game.cardTwo = item;
+                          if(game.cardOne.suit === game.cardTwo.suit && game.cardOne.rank === game.cardTwo.rank) {
+                            setTimeout(() => {
+                                alert('Victory');
+                            }, 500)
+                          } else {
+                            setTimeout(() => {
+                                alert('you lost');
+                            }, 500)
+                          }
+                          break;
+                      }
+                })
+                cardsEl.append(newImg);
+            })
+            const cards = Array.from(document.querySelectorAll(".card"));
+            setTimeout(() => {
+                cards.map((item) => {
+                    item.src = `./static/closed-card.svg`;
+										game.choice = 0;                
+									})
+            }, 5000)
         })
 
     }

@@ -11,7 +11,12 @@
     margin: 0;
     padding: 0;
   }
-  
+
+.center {
+    padding-left: calc(50% - 700px);
+    padding-right: calc(50% - 700px);
+}
+
 a {
     text-decoration: none;
   }
@@ -70,7 +75,8 @@ body {
     border: none;
 }
 
-.box-button {
+.box-button,
+.button-start-over {
     box-sizing: border-box;
     border-radius: 12px;
     background-color: #7AC100;
@@ -82,6 +88,10 @@ body {
     font-weight: 400;
     font-size: 24px;
     line-height: 32px;
+}
+
+.button-start-over {
+    margin-top: 52px;
 }
 
 .level1:hover {
@@ -100,4 +110,52 @@ body {
 
 .chosen {
     background-color: #5e7485;
+}
+
+.head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.timer{
+    width: 155px;
+    height: 91px;
+    margin-top: 22px;
+}
+
+.timer-up {
+    display: flex;
+}
+
+.numbers{
+    width: 155px;
+    height: 72px;
+    font-family: 'StratosSkyeng';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 72px;
+    color: white;
+}
+
+.min,
+.sec {
+    width: 77px;
+    height: 32px;
+    font-family: 'StratosSkyeng';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 32px;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+    color: #FFFFFF;
+    text-align: right;
+}
+
+.cards {
+    padding-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(9, 11%);
+    grid-column-gap: 9px;
+    grid-row-gap: 10px;
 }
