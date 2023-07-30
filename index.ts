@@ -1,5 +1,4 @@
 import "./style.css";
-// import clubs6 "./img/Clubs6.png"
 
 const game = {
     timer: "",
@@ -17,7 +16,7 @@ const cardRanks = ["6", "7", "8", "9", "10", "Q", "K", "J", "A"];
 
 function startStopwatch() {
     let seconds = 0;
-    let stopwatchInterval;
+    let stopwatchInterval: NodeJS.Timer;
     const timeElement = document.querySelector(".numbers");
 
     const updateDisplay = function () {
