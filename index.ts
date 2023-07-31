@@ -1,13 +1,34 @@
 import "./style.css";
 
-const game = {
+interface Card {
+    suit: string;
+    rank: string;
+}
+
+interface Game {
+    timer: string;
+    time: string;
+    difficulty: number;
+    status: string;
+    cards: Card[];
+    cardOne: Card;
+    cardTwo: Card;
+    choice: number;
+}
+
+const initialCardData = {
+    suit: '',
+    rank: '',
+};
+
+const game: Game = {
     timer: "",
     time: "00:00",
     difficulty: 0,
     status: "level",
     cards: [],
-    cardOne: {},
-    cardTwo: {},
+    cardOne: initialCardData,
+    cardTwo: initialCardData,
     choice: 3,
 };
 
@@ -17,7 +38,7 @@ const cardRanks = ["6", "7", "8", "9", "10", "Q", "K", "J", "A"];
 function startStopwatch() {
     let seconds: number = 0;
     let stopwatchInterval: NodeJS.Timer;
-    const timeElement = document.querySelector(".numbers")!;
+    const timeElement = document.querySelector(".numbers") as HTMLElement;
 
     const updateDisplay = function () {
         const minutes: number = parseInt(seconds / 60, 10);
@@ -79,7 +100,7 @@ function shuffle(array: number []) {
 }
 
 function renderApp() {
-    const appEl = document.getElementById("app")!;
+    const appEl = document.getElementById("app") as HTMLElement;
 
     if (game.status === "level") {
         const gameHtml = `
@@ -104,10 +125,10 @@ function renderApp() {
 
         appEl.innerHTML = gameHtml;
 
-        const levelOne = document.querySelector(".level1")!;
-        const levelTwo = document.querySelector(".level2")!;
-        const levelThree = document.querySelector(".level3")!;
-        const start = document.querySelector(".box-button")!;
+        const levelOne = document.querySelector(".level1") as HTMLElement;
+        const levelTwo = document.querySelector(".level2") as HTMLElement;
+        const levelThree = document.querySelector(".level3") as HTMLElement;
+        const start = document.querySelector(".box-button") as HTMLButtonElement;
 
         levelOne.addEventListener("click", () => {
             game.difficulty = 1;
@@ -196,8 +217,8 @@ function renderApp() {
                     game.difficulty = 0;
                     game.status = "level";
                     game.cards = [];
-                    game.cardOne = {};
-                    game.cardTwo = {};
+                    game.cardOne = initialCardData;
+                    game.cardTwo = initialCardData;
                     game.choice = 3;
 
                     renderApp();
