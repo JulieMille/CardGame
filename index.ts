@@ -15,12 +15,12 @@ const cardSuits = ["Diamonds", "Hearts", "Clubs", "Spades"];
 const cardRanks = ["6", "7", "8", "9", "10", "Q", "K", "J", "A"];
 
 function startStopwatch() {
-    let seconds = 0;
+    let seconds: number = 0;
     let stopwatchInterval: NodeJS.Timer;
-    const timeElement = document.querySelector(".numbers");
+    const timeElement = document.querySelector(".numbers")!;
 
     const updateDisplay = function () {
-        const minutes = parseInt(seconds / 60, 10);
+        const minutes: number = parseInt(seconds / 60, 10);
         const remainingSeconds = seconds % 60;
 
         const minutesDisplay = minutes < 10 ? "0" + minutes : minutes;
@@ -57,12 +57,12 @@ function startStopwatch() {
     };
 }
 
-function getRandomCard(cardsNum) {
+function getRandomCard(cardsNum: number) {
     return Math.floor(Math.random() * cardsNum);
 }
 
-function shuffle(array) {
-    let currentIndex = array.length,
+function shuffle(array: number []) {
+    let currentIndex: number = array.length,
         randomIndex;
     // While there remain elements to shuffle.
     while (currentIndex != 0) {
@@ -79,7 +79,7 @@ function shuffle(array) {
 }
 
 function renderApp() {
-    const appEl = document.getElementById("app");
+    const appEl = document.getElementById("app")!;
 
     if (game.status === "level") {
         const gameHtml = `
@@ -104,10 +104,10 @@ function renderApp() {
 
         appEl.innerHTML = gameHtml;
 
-        const levelOne = document.querySelector(".level1");
-        const levelTwo = document.querySelector(".level2");
-        const levelThree = document.querySelector(".level3");
-        const start = document.querySelector(".box-button");
+        const levelOne = document.querySelector(".level1")!;
+        const levelTwo = document.querySelector(".level2")!;
+        const levelThree = document.querySelector(".level3")!;
+        const start = document.querySelector(".box-button")!;
 
         levelOne.addEventListener("click", () => {
             game.difficulty = 1;
@@ -127,7 +127,7 @@ function renderApp() {
             console.log(game);
         });
 
-        const elementForm = document.getElementById("form");
+        const elementForm = document.getElementById("form")!;
 
         elementForm.addEventListener("submit", (event) => {
             event.preventDefault();
@@ -189,7 +189,7 @@ function renderApp() {
                 game.timer = timer;
                 game.timer.start();
                 const buttonStartOver =
-                    document.querySelector(".button-start-over");
+                    document.querySelector(".button-start-over")!;
                 buttonStartOver.addEventListener("click", () => {
                     game.timer = "";
                     game.time = "00:00";
@@ -204,15 +204,15 @@ function renderApp() {
                 });
             }
             for (let i = 1; i <= game.difficulty * 3; i++) {
-                let suit = cardSuits[getRandomCard(cardSuits.length)];
-                let rank = cardRanks[getRandomCard(cardRanks.length)];
+                let suit: string = cardSuits[getRandomCard(cardSuits.length)];
+                let rank: string = cardRanks[getRandomCard(cardRanks.length)];
                 game.cards.push({ suit, rank });
                 game.cards.push({ suit, rank });
 
                 // game.cards.push([cardSuits[getRandomCard(cardSuits.length)], cardRanks[getRandomCard(cardRanks.length)]]);
             }
             shuffle(game.cards);
-            const cardsEl = document.querySelector(".cards");
+            const cardsEl = document.querySelector(".cards")!;
             game.cards.map((item) => {
                 const newImg = document.createElement("img");
                 newImg.classList.add("card");
@@ -240,7 +240,7 @@ function renderApp() {
                                 setTimeout(() => {
                                     game.timer.stop();
                                     const victory =
-                                        document.getElementById("formTwo");
+                                        document.getElementById("formTwo")!;
                                     victory.classList.add("finish-model-open");
                                     victory.querySelector(
                                         ".finish-numbers",
@@ -250,7 +250,7 @@ function renderApp() {
                                 setTimeout(() => {
                                     game.timer.stop();
                                     const lose =
-                                        document.getElementById("formThree");
+                                        document.getElementById("formThree")!;
                                     lose.classList.add("finish-model-open");
                                     lose.querySelector(
                                         ".finish-numbers",
