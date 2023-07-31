@@ -38,7 +38,7 @@ const cardRanks = ["6", "7", "8", "9", "10", "Q", "K", "J", "A"];
 function startStopwatch() {
     let seconds: number = 0;
     let stopwatchInterval: NodeJS.Timer;
-    const timeElement = document.querySelector(".numbers") as HTMLElement;
+    const timeElement: HTMLElement = document.querySelector(".numbers")!;
 
     const updateDisplay = function () {
         const minutes: number = parseInt(seconds / 60, 10);
@@ -265,7 +265,7 @@ function renderApp() {
                                     victory.classList.add("finish-model-open");
                                     victory.querySelector(
                                         ".finish-numbers",
-                                    ).textContent = game.time;
+                                    )!.textContent = game.time;
                                 }, 500);
                             } else {
                                 setTimeout(() => {
@@ -275,7 +275,7 @@ function renderApp() {
                                     lose.classList.add("finish-model-open");
                                     lose.querySelector(
                                         ".finish-numbers",
-                                    ).textContent = game.time;
+                                    )!.textContent = game.time;
                                 }, 500);
                             }
                             break;
