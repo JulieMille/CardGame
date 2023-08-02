@@ -6,7 +6,7 @@ interface Card {
 }
 
 interface Game {
-    timer: string;
+    timer: ReturnType<typeof setTimeout>;
     time: string;
     difficulty: number;
     status: string;
@@ -22,7 +22,7 @@ const initialCardData = {
 };
 
 const game: Game = {
-    timer: "",
+    timer: startStopwatch(),
     time: "00:00",
     difficulty: 0,
     status: "level",
