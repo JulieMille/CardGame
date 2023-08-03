@@ -6,7 +6,11 @@ interface Card {
 }
 
 interface Game {
-    timer: ReturnType<typeof setTimeout>;
+    timer: {
+        start: () => void;
+        stop: () => void;
+        reset: () => void;
+    } | null;
     time: string;
     difficulty: number;
     status: string;
@@ -14,11 +18,12 @@ interface Game {
     cardOne: Card;
     cardTwo: Card;
     choice: number;
+    chosenCards: HTMLElement[];
 }
 
 const initialCardData = {
-    suit: '',
-    rank: '',
+    suit: "",
+    rank: "",
 };
 
 const game: Game = {
@@ -30,6 +35,7 @@ const game: Game = {
     cardOne: initialCardData,
     cardTwo: initialCardData,
     choice: 3,
+    chosenCards: [],
 };
 
 const cardSuits = ["Diamonds", "Hearts", "Clubs", "Spades"];
@@ -41,7 +47,7 @@ function startStopwatch() {
     const timeElement: HTMLElement = document.querySelector(".numbers")!;
 
     const updateDisplay = function () {
-        const minutes: number = parseInt(seconds / 60, 10);
+        const minutes: number = parseInt((seconds / 60).toString(), 10);
         const remainingSeconds = seconds % 60;
 
         const minutesDisplay = minutes < 10 ? "0" + minutes : minutes;
@@ -78,11 +84,32 @@ function startStopwatch() {
     };
 }
 
-function getRandomCard(cardsNum: number) {
+// function getRandomCard(cardsNum: number) {
+//     return Math.floor(Math.random() * cardsNum);
+// }
+
+function getRandomCard(cardsNum: number): number {
     return Math.floor(Math.random() * cardsNum);
 }
 
-function shuffle(array: number []) {
+// function shuffle(array: number []) {
+//     let currentIndex: number = array.length,
+//         randomIndex;
+//     // While there remain elements to shuffle.
+//     while (currentIndex != 0) {
+//         // Pick a remaining element.
+//         randomIndex = Math.floor(Math.random() * currentIndex);
+//         currentIndex--;
+//         // And swap it with the current element.
+//         [array[currentIndex], array[randomIndex]] = [
+//             array[randomIndex],
+//             array[currentIndex],
+//         ];
+//     }
+//     return array;
+// }
+
+function shuffle(array: Card[]) {
     let currentIndex: number = array.length,
         randomIndex;
     // While there remain elements to shuffle.
@@ -128,7 +155,9 @@ function renderApp() {
         const levelOne = document.querySelector(".level1") as HTMLElement;
         const levelTwo = document.querySelector(".level2") as HTMLElement;
         const levelThree = document.querySelector(".level3") as HTMLElement;
-        const start = document.querySelector(".box-button") as HTMLButtonElement;
+        const start = document.querySelector(
+            ".box-button",
+        ) as HTMLButtonElement;
 
         levelOne.addEventListener("click", () => {
             game.difficulty = 1;
@@ -212,7 +241,7 @@ function renderApp() {
                 const buttonStartOver =
                     document.querySelector(".button-start-over")!;
                 buttonStartOver.addEventListener("click", () => {
-                    game.timer = "";
+                    game.timer = null;
                     game.time = "00:00";
                     game.difficulty = 0;
                     game.status = "level";
@@ -237,12 +266,14 @@ function renderApp() {
             game.cards.map((item) => {
                 const newImg = document.createElement("img");
                 newImg.classList.add("card");
-                // newImg.src = `<%=require('./img/${item.suit} ${item.rank}.png')%>`;
                 newImg.src = `static/${item.suit} ${item.rank}.png`;
                 newImg.alt = `Card ${item.suit} ${item.rank}`;
-                newImg.addEventListener("click", () => {
+                newImg.addEventListener("click", (event) => {
+                    // newImg.addEventListener("click", (event) => {
+                    const target = event.target as HTMLElement; // Утверждение типа
+                    game.chosenCards.push(target);
+                    // game.chosenCards.push(event.target)
                     console.log(item.suit + item.rank);
-                    // newImg.src = `./img/${item.suit} ${item.rank}.png`
                     switch (game.choice) {
                         case 0:
                             newImg.src = `./static/${item.suit} ${item.rank}.png`;
@@ -259,17 +290,43 @@ function renderApp() {
                                 game.cardOne.rank === game.cardTwo.rank
                             ) {
                                 setTimeout(() => {
-                                    game.timer.stop();
-                                    const victory =
-                                        document.getElementById("formTwo")!;
-                                    victory.classList.add("finish-model-open");
-                                    victory.querySelector(
-                                        ".finish-numbers",
-                                    )!.textContent = game.time;
+                                    game.cards = game.cards.filter((card) => {
+                                        return !(
+                                            card.suit === game.cardTwo.suit &&
+                                            card.rank === game.cardTwo.rank
+                                        );
+                                    });
+                                    console.log(game.chosenCards);
+                                    console.log(game.cards);
+                                    game.chosenCards.map((card) =>
+                                        card.remove(),
+                                    );
+                                    game.choice = 0;
+                                    if (game.cards.length === 0) {
+                                        setTimeout(() => {
+                                            console.log("victory");
+                                            // game.timer.stop();
+                                            if (game.timer !== null) {
+                                                game.timer.stop();
+                                            }
+                                            const victory =
+                                                document.getElementById("formTwo")!;
+                                            victory.classList.add(
+                                                "finish-model-open",
+                                            );
+                                            victory.querySelector(
+                                                ".finish-numbers",
+                                            )!.textContent = game.time;
+                                        }, 700);
+                                    }
                                 }, 500);
+                                
                             } else {
                                 setTimeout(() => {
-                                    game.timer.stop();
+                                    // game.timer.stop();
+                                    if (game.timer !== null) {
+                                        game.timer.stop();
+                                    }
                                     const lose =
                                         document.getElementById("formThree")!;
                                     lose.classList.add("finish-model-open");
@@ -278,12 +335,15 @@ function renderApp() {
                                     )!.textContent = game.time;
                                 }, 500);
                             }
+
                             break;
                     }
                 });
                 cardsEl.append(newImg);
             });
-            const cards = Array.from(document.querySelectorAll(".card"));
+            const cards = Array.from(
+                document.querySelectorAll(".card"),
+            ) as HTMLImageElement[];
             setTimeout(() => {
                 cards.map((item) => {
                     item.src = `./static/closed-card.svg`;
