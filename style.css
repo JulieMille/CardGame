@@ -45,6 +45,11 @@ body {
     border-radius: 12px;
 }
 
+.box-finish{
+    padding-top: 26px;
+    padding-bottom: 50px;
+}
+
 .box-text {
     color: #004980;
     font-weight: 400;
@@ -138,6 +143,17 @@ body {
     color: white;
 }
 
+.finish-numbers{
+    width: 155px;
+    height: 72px;
+    font-family: 'StratosSkyeng';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 72px;
+    color: black;
+}
+
 .min,
 .sec {
     width: 77px;
@@ -158,4 +174,33 @@ body {
     grid-template-columns: repeat(9, 11%);
     grid-column-gap: 9px;
     grid-row-gap: 10px;
+}
+
+.finish-model{
+        position: fixed;
+        min-width: 100vw;
+        min-height: 100vh;
+        background-color: rgba(0, 73, 128, 0.5);
+        top: 0;
+        left: 0;
+        display: flex;
+        opacity: 0;
+        align-items: center;
+        justify-content: center;
+        transition: visibility 1s linear, opacity 1s linear;
+        visibility: hidden;
+    }
+
+.finish-model-open {
+    opacity: 1;
+    visibility: visible; 
+}
+
+.wasted-time{
+    font-family: StratosSkyeng;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px;
+    color: black;
 }
