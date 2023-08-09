@@ -19,3 +19,4 @@
     "prettier/prettier": ["error", {}, { "usePrettierrc": true }]
   }
 }
+
