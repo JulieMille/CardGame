@@ -84,30 +84,9 @@ function startStopwatch() {
     };
 }
 
-// function getRandomCard(cardsNum: number) {
-//     return Math.floor(Math.random() * cardsNum);
-// }
-
 function getRandomCard(cardsNum: number): number {
     return Math.floor(Math.random() * cardsNum);
 }
-
-// function shuffle(array: number []) {
-//     let currentIndex: number = array.length,
-//         randomIndex;
-//     // While there remain elements to shuffle.
-//     while (currentIndex != 0) {
-//         // Pick a remaining element.
-//         randomIndex = Math.floor(Math.random() * currentIndex);
-//         currentIndex--;
-//         // And swap it with the current element.
-//         [array[currentIndex], array[randomIndex]] = [
-//             array[randomIndex],
-//             array[currentIndex],
-//         ];
-//     }
-//     return array;
-// }
 
 function shuffle(array: Card[]) {
     let currentIndex: number = array.length,
@@ -235,9 +214,11 @@ function renderApp() {
             </form>
             `;
                 appEl.innerHTML = gameHtml;
-                const timer = startStopwatch();
-                game.timer = timer;
-                game.timer.start();
+                setTimeout(() => {
+                    const timer = startStopwatch();
+                    game.timer = timer;
+                    game.timer.start();
+                }, 5000);
                 const buttonStartOver =
                     document.querySelector(".button-start-over")!;
                 buttonStartOver.addEventListener("click", () => {
@@ -254,12 +235,10 @@ function renderApp() {
                 });
             }
             for (let i = 1; i <= game.difficulty * 3; i++) {
-                let suit: string = cardSuits[getRandomCard(cardSuits.length)];
-                let rank: string = cardRanks[getRandomCard(cardRanks.length)];
+                const suit: string = cardSuits[getRandomCard(cardSuits.length)];
+                const rank: string = cardRanks[getRandomCard(cardRanks.length)];
                 game.cards.push({ suit, rank });
                 game.cards.push({ suit, rank });
-
-                // game.cards.push([cardSuits[getRandomCard(cardSuits.length)], cardRanks[getRandomCard(cardRanks.length)]]);
             }
             shuffle(game.cards);
             const cardsEl = document.querySelector(".cards")!;
@@ -269,10 +248,8 @@ function renderApp() {
                 newImg.src = `static/${item.suit} ${item.rank}.png`;
                 newImg.alt = `Card ${item.suit} ${item.rank}`;
                 newImg.addEventListener("click", (event) => {
-                    // newImg.addEventListener("click", (event) => {
                     const target = event.target as HTMLElement; // Утверждение типа
                     game.chosenCards.push(target);
-                    // game.chosenCards.push(event.target)
                     console.log(item.suit + item.rank);
                     switch (game.choice) {
                         case 0:
@@ -305,12 +282,13 @@ function renderApp() {
                                     if (game.cards.length === 0) {
                                         setTimeout(() => {
                                             console.log("victory");
-                                            // game.timer.stop();
                                             if (game.timer !== null) {
                                                 game.timer.stop();
                                             }
                                             const victory =
-                                                document.getElementById("formTwo")!;
+                                                document.getElementById(
+                                                    "formTwo",
+                                                )!;
                                             victory.classList.add(
                                                 "finish-model-open",
                                             );
@@ -320,10 +298,8 @@ function renderApp() {
                                         }, 700);
                                     }
                                 }, 500);
-                                
                             } else {
                                 setTimeout(() => {
-                                    // game.timer.stop();
                                     if (game.timer !== null) {
                                         game.timer.stop();
                                     }
