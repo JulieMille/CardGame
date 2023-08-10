@@ -214,9 +214,11 @@ function renderApp() {
             </form>
             `;
                 appEl.innerHTML = gameHtml;
-                const timer = startStopwatch();
-                game.timer = timer;
-                game.timer.start();
+                setTimeout(() => {
+                    const timer = startStopwatch();
+                    game.timer = timer;
+                    game.timer.start();
+                }, 5000);
                 const buttonStartOver =
                     document.querySelector(".button-start-over")!;
                 buttonStartOver.addEventListener("click", () => {
